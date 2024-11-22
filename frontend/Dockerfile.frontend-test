@@ -1,0 +1,17 @@
+# Этап 1: Сборка фронтенда
+FROM node:18 AS build-frontend-tests
+
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Копируем package.json и package-lock.json для установки зависимостей
+COPY package*.json ./
+
+# Устанавливаем зависимости для фронтенда
+RUN npm install
+
+# Копируем все остальные файлы проекта
+COPY . .
+
+# Запуск тестов фронтенда
+CMD ["npm", "test"]
