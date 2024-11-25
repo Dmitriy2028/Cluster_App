@@ -1,14 +1,14 @@
 # Этап 1: Сборка фронтенда
-FROM node:18 AS build-frontend
+FROM node:18-slim AS build-frontend
 
 # Установим рабочую директорию
 WORKDIR /app
 
-# Копируем package.json и package-lock.json (или yarn.lock) для установки зависимостей
+# Копируем только package.json и package-lock.json для установки продакшн зависимостей
 COPY package*.json ./
 
-# Устанавливаем зависимости для фронтенда
-RUN npm install
+# Устанавливаем только зависимости для продакшн
+RUN npm install --production && npm cache clean --force
 
 # Копируем все остальные файлы проекта
 COPY . .

@@ -1,5 +1,5 @@
 # Этап 1: Сборка бэкенда
-FROM gradle:7.4.0-jdk17 AS build-backend-tests
+FROM gradle:8.7-jdk17 AS build-backend-tests
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
@@ -11,4 +11,4 @@ COPY build.gradle settings.gradle ./
 COPY src ./src
 
 # Запуск тестов с помощью Gradle
-CMD gradle test --no-daemon
+CMD gradle test --no-daemon --stacktrace

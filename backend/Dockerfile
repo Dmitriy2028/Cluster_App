@@ -1,16 +1,19 @@
 # Этап 1: Сборка бэкенда
-FROM gradle:7.4.0-jdk17 AS build-backend
+FROM gradle:8.7-jdk17 AS build-backend
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем build.gradle и другие необходимые файлы для сборки
+# Копируем только необходимые файлы для скачивания зависимостей
 COPY build.gradle settings.gradle ./
 
-# Копируем исходники проекта для сборки
+# Скачиваем зависимости
+RUN gradle dependencies --no-daemon
+
+# Копируем исходники проекта
 COPY src ./src
 
-# Скачиваем зависимости и собираем JAR файл
+# Собираем JAR файл
 RUN gradle build --no-daemon
 
 # Этап 2: Создание минимального образа для продакшн
